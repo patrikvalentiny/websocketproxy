@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="https://github.com/NuGet/NuGet.Client/blob/dev/src/NuGet.Core/NuGet.Packaging/compiler/resources/nuspec.xsd">
   <metadata>
-    <id>$title$</id>
+    <id>patrikvalentiny/websocketproxy</id>
     <version>$version$</version>
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://raw.githubusercontent.com/lifeemotions/websocketproxy/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/lifeemotions/websocketproxy</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/patrikvalentiny/websocketproxy/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/patrikvalentiny/websocketproxy</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>fix to avoid excepion when stopping</releaseNotes>
-    <copyright>Copyright ©  2015</copyright>
-    <tags>.net websocket http ssl proxy</tags>
+    <releaseNotes>move to dotnet 8</releaseNotes>
+    <copyright>Copyright ©  2024</copyright>
+    <tags>.net websocket http ssl proxy fleck</tags>
   </metadata>
 </package>

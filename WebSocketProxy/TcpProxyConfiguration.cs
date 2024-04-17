@@ -4,7 +4,7 @@ namespace WebSocketProxy
 {
     public class TcpProxyConfiguration
     {
-        private const SslProtocols DefaultProtocols = SslProtocols.Ssl2 | SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12;
+        private const SslProtocols DefaultProtocols = SslProtocols.Tls12 | SslProtocols.None | SslProtocols.Tls13;
 
         #region Constructors
 
