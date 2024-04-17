@@ -9,13 +9,13 @@ This library is independent on which web frameworks are used for handling websoc
 Installation can be done using NuGet.
 
 ```
-Install-Package WebSocketProxy
+Install-Package patrikvalentiny-WebSocketProxy
 ```
 
 # Sample Usage
-The project "WebSocket.Sample" contains a sample usage using [NancyFX](https://github.com/NancyFx/Nancy) and [Fleck](https://github.com/statianzo/Fleck).
+The project "WebSocket.Sample" contains a sample usage using dotnet WebApi and [Fleck](https://github.com/statianzo/Fleck).
 
-The first step is to build the configuration object in which you set the endpoints that are listening for HTTP (Nancy) and WebSocket requests (Fleck) and the public endpoint which will be listening to both kinds of requests. 
+The first step is to build the configuration object in which you set the endpoints that are listening for HTTP (dotnet) and WebSocket requests (Fleck) and the public endpoint which will be listening to both kinds of requests. 
 ```csharp
 TcpProxyConfiguration configuration = new TcpProxyConfiguration()
             {
@@ -38,30 +38,27 @@ TcpProxyConfiguration configuration = new TcpProxyConfiguration()
             };
 
 ```
-Then, initialize Nancy and Fleck, followed by the WebSocketServer.
+Then, initialize Api and Fleck, followed by the WebSocketServer.
 
 ```csharp
-            using (var nancyHost = new NancyHost(new Uri("http://localhost:8081")))
-            using (var websocketServer = new WebSocketServer("ws://0.0.0.0:8082"))
-            using (var tcpProxy = new TcpProxyServer(configuration))
-            {
-                // Initialize Nancy
-                nancyHost.Start();
-                
-                // Initialize Fleck
-                websocketServer.Start(connection =>
-                {
-                    connection.OnOpen = () => Console.WriteLine("Connection on open");
-                    connection.OnClose = () => Console.WriteLine("Connection on close");
-                    connection.OnMessage = message => Console.WriteLine("Message: " + message);
-                });
+var builder = WebApplication.CreateBuilder(args);
 
-                // Initialize the proxy
-                tcpProxy.Start();
+// Add your api setup
 
-                Console.WriteLine("Press [Enter] to stop");
-                Console.ReadLine();
-            }
+builder.WebHost.UseUrls("http://*:5000");
+var app = builder.Build();
+
+using var websocketServer = new WebSocketServer("ws://0.0.0.0:8181");
+using var tcpProxy = new TcpProxyServer(configuration);
+websocketServer.Start(connection =>
+{
+    connection.OnOpen = () => Console.WriteLine("COnnection on open");
+    connection.OnClose = () => Console.WriteLine("Connection on close");
+    connection.OnMessage = message => Console.WriteLine("Message: " + message);
+});
+
+tcpProxy.Start();
+app.Run();
 ```
 By pointing the web browser to the port 8080, you will receive an html page which initializes a websocket connection.
 
